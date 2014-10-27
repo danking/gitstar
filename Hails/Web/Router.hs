@@ -205,7 +205,7 @@ routeVar varName route = mroute $ \pi conf lreq -> do
           poppedHdrReq = req {
             queryString = (varName, Just varVal):(queryString req)}
       currentLabel <- getLabel
-      lreqNext <- label (currentLabel `upperBound` labelOf lreq) poppedHdrReq
+      lreqNext <- label (currentLabel `lub` labelOf lreq) poppedHdrReq
       runRoute route (tail pi) conf lreqNext
     else return Nothing
 
